@@ -152,15 +152,15 @@ console.log(datablock)
         <tr>
           <td>
             <h1>
-              <%= JSONData.portfolio.portfolioValueBtc %>
+               JSONData.portfolio.portfolioValueBtc %>
             </h1>
-            <%- rv(JSONData.portfolio.percentChangeBtc) %>
+            --- rv(JSONData.portfolio.percentChangeBtc) %>
           </td>
           <td class="text-right">
             <h1>
-              <%= JSONData.portfolio.portfolioValueFiat %>
+              --= JSONData.portfolio.portfolioValueFiat %>
             </h1>
-            <%- rv(JSONData.portfolio.percentChangeFiat) %>
+            --- rv(JSONData.portfolio.percentChangeFiat) %>
           </td>
 
         </tr>
@@ -180,45 +180,45 @@ console.log(datablock)
           </tr>
         </thead>
         <tbody>
-          <%
+          --
         var JSONpositionList = JSONData.positionList;
          for(var i=0; i<JSONpositionList.length; i++) { %>
             <tr>
-              <td style="display: none"><%= JSONpositionList[i].base%>-<%= JSONpositionList[i].coin%></td>
+              <td style="display: none">--= JSONpositionList[i].base%>---= JSONpositionList[i].coin%></td>
               <td>
-                <img src="<%= JSONpositionList[i].coinUrl %>" height="24" width="24">
+                <img src="--= JSONpositionList[i].coinUrl %>" height="24" width="24">
                 <b>
-                  <%= JSONpositionList[i].fullName %>
+                  --= JSONpositionList[i].fullName %>
                 </b>
                 <br>
 
               </td>
               <td>
-                <%= JSONpositionList[i].quantityString %>
+                --= JSONpositionList[i].quantityString %>
               </td>
 
               <td>
-                <%= JSONpositionList[i].lastPrice.toFixed(8) %>
+                --= JSONpositionList[i].lastPrice.toFixed(8) %>
               </td>
 
               <td>
-                <%= JSONpositionList[i].holdingValueBtcString%>
+                --= JSONpositionList[i].holdingValueBtcString%>
               </td>
               <td>
-                <%- rv(JSONpositionList[i].twentyFourHourPercentChangeString) %>
+                --- rv(JSONpositionList[i].twentyFourHourPercentChangeString) %>
               </td>
 
               <td>
-                <%= JSONpositionList[i].lastPriceFiatString %>
+                --= JSONpositionList[i].lastPriceFiatString %>
               </td>
               <td>
-                <%= JSONpositionList[i].holdingValueFiatString %>
+                --= JSONpositionList[i].holdingValueFiatString %>
               </td>
               <td>
-                <%- rv(JSONpositionList[i].twentyFourHourPercentChangeFiatString) %>
+                --- rv(JSONpositionList[i].twentyFourHourPercentChangeFiatString) %>
               </td>
             </tr>
-            <% } %>
+            -- } %>
         </tbody>
       </table>
       <div class="row">
