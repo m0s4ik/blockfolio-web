@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Blockfolio</title>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+
+  <!-- Latest compiled and minified Locales -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-it-IT.min.js"></script>
+
+</head>
+
+  <script>
+
+    function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+console.log(window.location.search.slice(1))
+    function modalDet(coin) {
+
+      
+      console.log(coin)
+      $.ajax({
+        method: "GET",
+        url: "/bf/" + coin,
+        crossDomain: true,
+        async: false
+
+      })
+
+
+        .done(function (data) {
+          $('#myModal').modal('show');
+console.log(data)
+          $.each(data.holdings, function (ppID, pTitle) {
+
+            if (ppID.substr(0, 4) == 'life') {
+
+              if (pTitle.substr(0, 1) == '-') {
+                $("#" + ppID).css("color", "red");
+              }
+              else {
+                $("#" + ppID).css("color", "green");
+              }
+            }
+
+            $("#" + ppID).text(pTitle);
+          });
+
+
+
+
+          $('#modal-title').html(data.holdings.base + ' - ' + data.holdings.coin)
+          //$('.modal-body').html(data.holdings)
+
+
+
+          console.log(data)
+        })
+        .fail(function (data) {
+          console.log('error')
+          console.log(data);
+        });
+
+
+    }
+
+
+var urlBlockFolioApi = "https://api-v0.blockfolio.com/rest/" ;
+
+
+console.log(urlBlockFolioApi + "get_all_positions/" + token + '?fiat_currency=EUR')
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+    $.ajax({
+        method: "GET",
+        url: urlBlockFolioApi + "get_all_positions/" + token + '?fiat_currency=EUR',
+        crossDomain: true,
+        async: false
+      })
+
+
+        .done(function (datablock) {
+          
+console.log(datablock)
+
+    $('#table').bootstrapTable({
+        data:datablock
+    });
+
+
+          $.each(data.holdings, function (ppID, pTitle) {
+
+            if (ppID.substr(0, 4) == 'life') {
+
+              if (pTitle.substr(0, 1) == '-') {
+                $("#" + ppID).css("color", "red");
+              }
+              else {
+                $("#" + ppID).css("color", "green");
+              }
+            }
+
+            $("#" + ppID).text(pTitle);
+          });
+
+
+          console.log(data)
+        })
+        .fail(function (data) {
+          console.log('error')
+          console.log(data);
+        });
+    });
+  </script>
+
+  <body>
+
+    <div class="container-fluid">
+   
+      <form>
+            <div class="input-group">
+              <input type="text" id="token" class="form-control" placeholder="243cb82c03961668b8e6d71e4d118bd21f14b4537956de29edfc9d296c227d1b" text="243cb82c03961668b8e6d71e4d118bd21f14b4537956de29edfc9d296c227d1b">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+    </div>
+      <table class="table">
+        <tr>
+          <td>
+            <h1>
+              <%= JSONData.portfolio.portfolioValueBtc %>
+            </h1>
+            <%- rv(JSONData.portfolio.percentChangeBtc) %>
+          </td>
+          <td class="text-right">
+            <h1>
+              <%= JSONData.portfolio.portfolioValueFiat %>
+            </h1>
+            <%- rv(JSONData.portfolio.percentChangeFiat) %>
+          </td>
+
+        </tr>
+      </table>
+      <table class="table table-striped table-bordered" data-toggle="table" id="table">
+        <thead>
+          <tr>
+            <th data-visible="false" style="display: none">asd</th>
+            <th data-sortable="true">Coin</th>
+            <th data-sortable="true" data-sorter="sortPrice">Quantità</th>
+            <th data-sortable="true" data-sorter="sortPrice">Prezzo BTC</th>
+            <th data-sortable="true" data-sorter="sortPrice">Valore BTC</th>
+            <th data-sortable="true" data-sorter="starsSorter">% BTC</th>
+            <th data-sortable="true" data-sorter="sortPrice">Prezzo €</th>
+            <th data-sortable="true" data-sorter="sortPrice">Valore €</th>
+            <th data-sortable="true" data-sorter="starsSorter" data-sort-order="asc">% €</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%
+        var JSONpositionList = JSONData.positionList;
+         for(var i=0; i<JSONpositionList.length; i++) { %>
+            <tr>
+              <td style="display: none"><%= JSONpositionList[i].base%>-<%= JSONpositionList[i].coin%></td>
+              <td>
+                <img src="<%= JSONpositionList[i].coinUrl %>" height="24" width="24">
+                <b>
+                  <%= JSONpositionList[i].fullName %>
+                </b>
+                <br>
+
+              </td>
+              <td>
+                <%= JSONpositionList[i].quantityString %>
+              </td>
+
+              <td>
+                <%= JSONpositionList[i].lastPrice.toFixed(8) %>
+              </td>
+
+              <td>
+                <%= JSONpositionList[i].holdingValueBtcString%>
+              </td>
+              <td>
+                <%- rv(JSONpositionList[i].twentyFourHourPercentChangeString) %>
+              </td>
+
+              <td>
+                <%= JSONpositionList[i].lastPriceFiatString %>
+              </td>
+              <td>
+                <%= JSONpositionList[i].holdingValueFiatString %>
+              </td>
+              <td>
+                <%- rv(JSONpositionList[i].twentyFourHourPercentChangeFiatString) %>
+              </td>
+            </tr>
+            <% } %>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class=" text-center">
+
+        </div>
+      </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">
+
+              <div id="modal-title"></div>
+
+
+            </h4>
+          </div>
+          <div class="modal-body">
+
+
+            <table class="table table-striped table-bordered" data-toggle="table" id="table">
+              <thead>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <b>Costo</b>
+                  </td>
+                  <td>
+                    <span id="netCostFiatString"></span>
+                  </td>
+                  <td>
+                    <span id="netCostString"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Guadagno</td>
+                  <td>
+                    <b>
+                      <span id="lifetimeChangeFiatString"></span>
+                    </b>
+                  </td>
+                  <td>
+                    <b>
+                      <span id="lifetimeChangeString"></span>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Valore</td>
+                  <td>
+                    <span id="holdingValueFiatString"></span>
+                  </td>
+                  <td>
+                    <span id="holdingValueString"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            <p>
+              <div class="col-sm-6 text-center"> Exchange:
+                <span id="exchange"></span>
+              </div>
+              <div class="col-sm-6 text-center"> Quantità:
+                <span id="quantityString"></span>
+              </div>
+            </p>
+            <br>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+  <script>
+
+
+
+    
+    function sortPrice(aHTML, bHTML) {
+
+      var a = parseFloat(aHTML.replace(',', '').replace('€', '').replace('฿', '').trim());
+      var b = parseFloat(bHTML.replace(',', '').replace('€', '').replace('฿', '').trim());
+
+
+      if (a < b) return 1;
+      if (a > b) return -1;
+      return 0;
+    }
+
+    function starsSorter(aHTML, bHTML) {
+
+      var a = parseFloat(aHTML.replace('<p style="color:red">', '').replace('<p style="color:green">', '').replace('%</p>', '').trim());
+      var b = parseFloat(bHTML.replace('<p style="color:red">', '').replace('<p style="color:green">', '').replace('%</p>', '').trim());
+
+      if (a < b) return 1;
+      if (a > b) return -1;
+      return 0;
+    }
+  </script>
+
+</html>
