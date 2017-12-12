@@ -90,11 +90,13 @@ console.log(urlBlockFolioApi + "get_all_positions/" + token + '?fiat_currency=EU
 $( document ).ready(function() {
   // Handler for .ready() called.
 
+  delete $.ajaxSettings.headers["Origin"]; // Remove header before call
+  delete $.ajaxSettings.headers["Referer"];
+
     $.ajax({
         method: "GET",
         url: urlBlockFolioApi + "get_all_positions/" + token + '?fiat_currency=EUR',
         crossDomain: true,
-        contentType: 'html',
         async: false
       })
 
