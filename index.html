@@ -32,16 +32,7 @@
 
   <script>
 
-    function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-console.log(window.location.search.slice(1))
+
     function modalDet(coin) {
 
       
@@ -93,7 +84,7 @@ console.log(data)
 
 
 var urlBlockFolioApi = "https://api-v0.blockfolio.com/rest/" ;
-
+var token = window.location.search.slice(1)
 
 console.log(urlBlockFolioApi + "get_all_positions/" + token + '?fiat_currency=EUR')
 $( document ).ready(function() {
