@@ -95,7 +95,10 @@ $( document ).ready(function() {
     $.ajax({
         method: "GET",
         url: urlBlockFolioApi + "get_all_positions/" + token + '?fiat_currency=EUR',
-        headers: { 'Origin': null },
+        headers:{  
+     "Accept":"application/json",//depends on your api
+      "Content-type":"application/x-www-form-urlencoded"//depends on your api
+        },
         crossDomain: true,
         async: false
       })
